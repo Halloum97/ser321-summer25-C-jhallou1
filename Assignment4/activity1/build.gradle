@@ -1,0 +1,59 @@
+plugins {
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.json', name: 'json', version: '20200518'
+}
+
+application {
+    // Default main class (not used by tasks, but required by the plugin)
+    mainClass = 'taskone.Client'
+}
+
+tasks.register('runTask1', JavaExec) {
+    group = 'application'
+    description = 'Run single-threaded server (Task 1)'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass.set('taskone.Server')
+    standardInput = System.in
+    args '8000'
+}
+
+tasks.register('runTask2', JavaExec) {
+    group = 'application'
+    description = 'Run unbounded multi-threaded server (Task 2)'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass.set('taskone.ThreadedServer')
+    standardInput = System.in
+    args '8000'
+}
+
+tasks.register('runTask3', JavaExec) {
+    group = 'application'
+    description = 'Run thread-pool based server (Task 3)'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass.set('taskone.ThreadPoolServer')
+    standardInput = System.in
+
+    // Default port and pool size, change with -Pport and -Ppool
+    def port = project.hasProperty('port') ? project.getProperty('port') : '8000'
+    def poolSize = project.hasProperty('pool') ? project.getProperty('pool') : '5'
+    args port, poolSize
+}
+
+tasks.register('runClient', JavaExec) {
+    group = 'application'
+    description = 'Run the client'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass.set('taskone.Client')
+    standardInput = System.in
+
+    def host = project.hasProperty("host") ? project.getProperty("host") : "localhost"
+    def port = project.hasProperty("port") ? project.getProperty("port") : "8000"
+    args host, port
+}
