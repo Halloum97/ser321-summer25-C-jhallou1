@@ -1,0 +1,76 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.distributed'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+application {
+    mainClass = 'com.distributed.Client' // Default application entry point
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+tasks.register('runLeader', JavaExec) {
+    group = 'application'
+    description = 'Runs the Leader server'
+    mainClass.set('com.distributed.Leader')
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+tasks.register('runNode', JavaExec) {
+    group = 'application'
+    description = 'Runs a Node instance'
+    mainClass.set('com.distributed.Node')
+    classpath = sourceSets.main.runtimeClasspath
+    args = project.hasProperty('wrong') && project.wrong == '1' ? ['5001', '-Pwrong=1'] : ['5001']
+}
+
+tasks.register('runNode1', JavaExec) {
+    group = 'application'
+    description = 'Runs Node 1'
+    mainClass.set('com.distributed.Node')
+    classpath = sourceSets.main.runtimeClasspath
+    args = ['5001']
+}
+
+tasks.register('runNode2', JavaExec) {
+    group = 'application'
+    description = 'Runs Node 2'
+    mainClass.set('com.distributed.Node')
+    classpath = sourceSets.main.runtimeClasspath
+    args = ['5002']
+}
+
+tasks.register('runNode3', JavaExec) {
+    group = 'application'
+    description = 'Runs Node 3'
+    mainClass.set('com.distributed.Node')
+    classpath = sourceSets.main.runtimeClasspath
+    args = ['5003']
+}
+
+tasks.register('runClient', JavaExec) {
+    group = 'application'
+    description = 'Runs the Client'
+    mainClass.set('com.distributed.Client')
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+}
