@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ServerTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2025-07-12T04:07:27" hostname="PC-43AE4B1FBF" time="0.553">
+  <properties/>
+  <testcase name="testSingleRollDice" classname="ServerTest" time="0.451"/>
+  <testcase name="parrot" classname="ServerTest" time="0.02"/>
+  <testcase name="joke" classname="ServerTest" time="0.037"/>
+  <testcase name="testListPasswords" classname="ServerTest" time="0.017"/>
+  <testcase name="testTripleRollDice" classname="ServerTest" time="0.008"/>
+  <testcase name="testSaveAndRetrievePassword" classname="ServerTest" time="0.015"/>
+  <testcase name="testRetrieveMissingPassword" classname="ServerTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

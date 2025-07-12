@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "service";
+option java_outer_classname = "TodoProto";
+
+package services;
+
+import "google/protobuf/empty.proto";
+
+service Todo {
+  rpc AddTask (TaskRequest) returns (TaskResponse) {}
+  rpc ListTasks (google.protobuf.Empty) returns (TaskList) {}
+  rpc RemoveTask (RemoveRequest) returns (TaskResponse) {}
+}
+
+message TaskRequest {
+  string description = 1;
+}
+
+message RemoveRequest {
+  string description = 1; // simple matching
+}
+
+message TaskResponse {
+  bool ok = 1;
+  string error = 2;
+}
+
+message TaskList {
+  repeated string tasks = 1;
+}
